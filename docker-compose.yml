@@ -4,11 +4,17 @@ services:
 
 ### Applications Code Container #############################
 
+    my-apps:
+        image: tianon/true
+        links:
+            - nginx
+
+### Applications Code Container #############################
+
     applications:
         image: tianon/true
         volumes:
             - ../:/var/www
-#            - ../sample/:/var/www/sample
 
 ### Workspace Utilities Container ###########################
 
@@ -16,19 +22,20 @@ services:
         build:
             context: ./workspace
             args:
-                - INSTALL_XDEBUG=false
+                - INSTALL_XDEBUG=true
                 - INSTALL_MONGO=false
-                - INSTALL_NODE=false
+                - INSTALL_NODE=true
                 - INSTALL_YARN=false
                 - INSTALL_DRUSH=false
                 - INSTALL_AEROSPIKE_EXTENSION=false
                 - INSTALL_V8JS_EXTENSION=false
                 - COMPOSER_GLOBAL_INSTALL=false
-                - INSTALL_WORKSPACE_SSH=false
+                - INSTALL_WORKSPACE_SSH=true
                 - PUID=1000
                 - PGID=1000
                 - NODE_VERSION=stable
                 - TZ=UTC
+            dockerfile: Dockerfile-php-7.1
         volumes_from:
             - applications
         extra_hosts:
@@ -44,14 +51,14 @@ services:
         build:
             context: ./php-fpm
             args:
-                - INSTALL_XDEBUG=false
+                - INSTALL_XDEBUG=true
                 - INSTALL_MONGO=false
                 - INSTALL_ZIP_ARCHIVE=false
-                - INSTALL_MEMCACHED=false
+                - INSTALL_MEMCACHED=true
                 - INSTALL_OPCACHE=false
                 - INSTALL_AEROSPIKE_EXTENSION=false
-                - CODEIGNITER=false
-            dockerfile: Dockerfile-70
+                - CODEIGNITER=true
+            dockerfile: Dockerfile-7.1
         volumes_from:
             - applications
         expose:
@@ -82,6 +89,8 @@ services:
             - "443:443"
         links:
             - php-fpm
+            - memcached
+            - phpmyadmin
 
 ### Apache Server Container #################################
 
@@ -118,11 +127,12 @@ services:
             context: ./mysql
             args:
                 - MYSQL_DATABASE=homestead
-                - MYSQL_USER=homestead
-                - MYSQL_PASSWORD=secret
-                - MYSQL_ROOT_PASSWORD=root
+                - MYSQL_USER=mibrahim
+                - MYSQL_PASSWORD=m123
+                - MYSQL_ROOT_PASSWORD=m123
         volumes:
             - mysql:/var/lib/mysql
+            - ../../backup/mysql:/var/www/mysql
         ports:
             - "3306:3306"
 
