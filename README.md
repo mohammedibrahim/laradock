@@ -69,6 +69,7 @@ Laradock is configured to run Laravel Apps by default, and it can be modified to
 		- [Install Node + YARN](#Install-Yarn)
 		- [Debugging](#debugging)
 		- [Upgrading LaraDock](#upgrading-laradock)
+- [Related Projects](#related-projects)
 - [Help & Questions](#Help)
 
 
@@ -618,7 +619,7 @@ By default **PHP-FPM 7.0** is running.
 4 - Finally rebuild the container
 
 ```bash
-docker-compose build php
+docker-compose build php-fpm
 ```
 
 > For more details about the PHP base image, visit the [official PHP docker images](https://hub.docker.com/_/php/).
@@ -1330,6 +1331,32 @@ It should be like this:
 2 - Re-build the containers `docker-compose build workspace php-fpm`
 
 <br>
+<a name="Install-Laravel-Envoy"></a>
+### Install Laravel Envoy (Envoy Task Runner)
+
+1 - Open the `docker-compose.yml` file
+<br>
+2 - Search for the `INSTALL_LARAVEL_ENVOY` argument under the Workspace Container
+<br>
+3 - Set it to `true`
+<br>
+
+It should be like this:
+
+```yml
+    workspace:
+        build:
+            context: ./workspace
+            args:
+                - INSTALL_LARAVEL_ENVOY=true
+    ...
+```
+
+4 - Re-build the containers `docker-compose build workspace`
+
+####[Laravel Envoy Documentation Here](https://laravel.com/docs/5.3/envoy)
+
+<br>
 <a name="debugging"></a>
 
 ### PHPStorm
@@ -1418,9 +1445,24 @@ This little project was built by one man who has a full time job and many respon
 
 #### Read the [Contribution Guidelines](https://github.com/LaraDock/laradock/blob/master/CONTRIBUTING.md).
 
+<br>
+<a name="related-projects"></a>
+## Related Projects
 
+LaraDock related projects:
+* [LaraDock CLI](https://github.com/lorinlee/laradock-cli) by [LorinLee](https://github.com/lorinlee)
+* [LaraDock Env](https://github.com/bagart/laradock_env) by [BAGArt](https://github.com/bagart)
+* [Klaradock](https://github.com/poyhsiao/Klaradock) by [Kim Hsiao](https://github.com/poyhsiao)
+* [Ansible Laradock Kubernetes](https://github.com/sifat-rahim/ansible-laradock-kubernetes) by [Sifat Rahim](https://github.com/sifat-rahim)
 
+These Docker Compose projects have piqued our interest:
+* [MageDock](https://github.com/ojhaujjwal/magedock) by [Ujjwal Ojha](https://github.com/ojhaujjwal)
+* [RubyDev-Dock](https://github.com/scudelletti/rubydev-dock) by [Diogo Scudelletti](https://github.com/scudelletti)
+* [NoDock](https://github.com/Osedea/nodock) by [Osedea](https://github.com/Osedea)
 
+If you want your project listed here, please open an issue.
+
+<br>
 <a name="Help"></a>
 ## Help & Questions
 
